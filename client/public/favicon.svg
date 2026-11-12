@@ -1,4 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#0b1f3a"/>
-  <path d="M32 10l5 18 16 6-16 3-5 17-5-17-16-3 16-6z" fill="#d4af37"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="ouro" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b8912c"/>
+      <stop offset="45%" stop-color="#f3dc92"/>
+      <stop offset="100%" stop-color="#c79a30"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#061329"/>
+  <g transform="rotate(-16 32 33)">
+    <ellipse cx="32" cy="33" rx="23" ry="13.5" fill="none" stroke="url(#ouro)" stroke-width="3.2"/>
+  </g>
+  <path d="M20 45 L27.5 20 H48 L45.6 27.4 H32.6 L31.2 32 H43.2 L40.9 39.2 H29 L27.2 45 Z" fill="url(#ouro)"/>
 </svg>

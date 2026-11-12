@@ -49,6 +49,20 @@ O `vercel.json` já cuida do resto:
 > enquanto a instância estiver quente e **somem entre deploys**. Para valer em produção, troque o
 > `store.js` por um banco real (Vercel Postgres, Supabase, Neon, Mongo Atlas).
 
+
+### Imagem de compartilhamento
+
+`client/public/og-flytrade.jpg` (1200x630) e as meta tags Open Graph / Twitter Card em
+`client/index.html` fazem o link exibir a logo no WhatsApp, LinkedIn, Facebook e Telegram.
+
+Os scrapers não resolvem caminho relativo, então a URL absoluta é injetada no build por um
+plugin do `vite.config.js`, que lê nesta ordem: `SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL`
+→ `VERCEL_URL` → `http://localhost:5173`. Na Vercel funciona sem configurar nada; com domínio
+próprio, defina `SITE_URL` nas variáveis de ambiente do projeto.
+
+> Esses serviços guardam o preview em cache. Depois de trocar de domínio, revalide em
+> [developers.facebook.com/tools/debug](https://developers.facebook.com/tools/debug/).
+
 ## Estrutura
 
 ```
