@@ -229,9 +229,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* --------------------------- depoimentos -------------------------- */
 .depoimentos { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-.depoimento { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--raio-lg); padding: 30px; }
+.depoimento {
+  background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--raio-lg); padding: 30px; display: flex; flex-direction: column; height: 100%;
+}
 .depoimento p { color: #d6e1ef; font-size: 0.98rem; }
-.depoimento footer { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; align-items: center; gap: 14px; }
+.depoimento footer {
+  margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.depoimento p { margin-bottom: 24px; }
 .depoimento footer .avatar { width: 50px; height: 50px; flex: none; font-size: 0.92rem; letter-spacing: 0.04em; }
 .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--ouro), var(--ouro-claro)); color: var(--navy-900); display: grid; place-items: center; font-weight: 800; }
 .estrelas { color: var(--ouro); letter-spacing: 3px; margin-bottom: 14px; }

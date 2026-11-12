@@ -28,7 +28,7 @@ const DEPOIMENTOS = [
   },
   {
     nome: 'Marina Costa',
-    papel: 'Diretora · Táxi aéreo do Centro-Oeste',
+    papel: 'Diretora · Táxi aéreo',
     iniciais: 'MC',
     texto: 'Compramos dois King Air pela FlyTrade. Laudo técnico honesto, sem maquiagem, e negociação transparente do começo ao fim.',
   },
