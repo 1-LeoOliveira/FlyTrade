@@ -25,10 +25,36 @@ npm run build        # gera client/dist
 npm start            # Express serve a API e o build estático em :4000
 ```
 
+
+## Deploy na Vercel
+
+O projeto sobe como **uma única aplicação**: o Vite gera o site estático e a API Express roda como
+função serverless em `api/index.js`.
+
+Na Vercel, em **Settings → General → Root Directory**, use a **raiz do repositório** (`./`).
+Apontar para `client` publica apenas o front-end: o site carrega, mas o catálogo volta vazio
+porque `/api/*` não existe — e sem aeronaves nenhuma foto aparece.
+
+O `vercel.json` já cuida do resto:
+
+| Config | Valor |
+| --- | --- |
+| Build Command | `npm run build` |
+| Output Directory | `client/dist` |
+| Rewrite da API | `/api/*` → função `api/index.js` |
+| Rewrite do SPA | demais rotas → `index.html` |
+
+> **Persistência em produção:** o disco da Vercel é somente leitura, então o `store.js` passa a
+> gravar em `/tmp`, que é efêmero. Solicitações de anúncio, leads e cadastros duram apenas
+> enquanto a instância estiver quente e **somem entre deploys**. Para valer em produção, troque o
+> `store.js` por um banco real (Vercel Postgres, Supabase, Neon, Mongo Atlas).
+
 ## Estrutura
 
 ```
 FlyTrade/
+├── api/index.js             # entrada serverless da Vercel (reexporta o app Express)
+├── vercel.json
 ├── client/                  # Vite + React
 │   ├── public/              # logo e favicon
 │   └── src/
@@ -41,8 +67,9 @@ FlyTrade/
     ├── data/db.json         # gerado na 1ª execução (estoque, leads, usuários)
     └── src/
         ├── data/aeronaves.js  # 12 aeronaves de exemplo
-        ├── store.js           # persistência
-        └── index.js           # rotas da API
+        ├── store.js           # persistência (arquivo local ou /tmp em serverless)
+        ├── app.js             # app Express com todas as rotas
+        └── index.js           # sobe o servidor local (app.listen)
 ```
 
 ## Páginas

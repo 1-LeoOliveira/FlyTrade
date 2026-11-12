@@ -3,7 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "description": "FlyTrade - plataforma de compra e venda de aeronaves",
-  "workspaces": ["client", "server"],
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
     "dev": "concurrently -n API,WEB -c magenta,cyan \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "npm run dev -w server",
@@ -13,5 +16,13 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

@@ -1,11 +1,19 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { AERONAVES } from './data/aeronaves.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DB_DIR = path.join(__dirname, '..', 'data');
-const DB_FILE = path.join(DB_DIR, 'db.json');
+
+/**
+ * Em servidor próprio o banco fica em server/data/db.json.
+ * Em ambiente serverless (Vercel) o disco é somente leitura: usamos /tmp,
+ * que é efêmero — os dados vivem apenas enquanto a instância estiver quente.
+ */
+const SERVERLESS = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const DB_DIR = SERVERLESS ? os.tmpdir() : path.join(__dirname, '..', 'data');
+const DB_FILE = path.join(DB_DIR, SERVERLESS ? 'flytrade-db.json' : 'db.json');
 
 const seed = () => ({
   aeronaves: AERONAVES.map((a) => ({ ...a })),
@@ -50,8 +58,13 @@ function load() {
 }
 
 function persist() {
-  fs.mkdirSync(DB_DIR, { recursive: true });
-  fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf8');
+  try {
+    fs.mkdirSync(DB_DIR, { recursive: true });
+    fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf8');
+  } catch (err) {
+    // disco somente leitura: segue apenas em memória
+    console.warn('[store] não foi possível gravar o banco:', err.message);
+  }
 }
 
 load();
